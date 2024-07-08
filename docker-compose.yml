@@ -1,0 +1,28 @@
+version: '2'
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - ./data/mongo:/data/db
+    ports:
+      - "27017:27017"
+  fastapi:
+    build:
+      context: ./
+      dockerfile: fastapi.dockerfile
+    volumes:
+      - './fastapi:/app'
+    ports:
+      - 8000:8000
+  react:
+    build:
+      context: ./
+      dockerfile: react.dockerfile
+    volumes:
+      - './react-app:/app'
+    ports:
+      - 3000:3000
